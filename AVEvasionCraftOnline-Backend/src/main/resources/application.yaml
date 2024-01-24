@@ -1,0 +1,28 @@
+bypassav:
+  templates-directory: /home/kali/AVEvasionCraftOnline/template
+  storage-directory: /home/kali/AVEvasionCraftOnline/download
+  compilerwork-directory: /home/kali/AVEvasionCraftOnline/compiler
+  templates-mapping:
+    go_VirtualAlloc:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+    nim_VirtualAlloc:
+      loadMethod:
+        - EMBEDDED
+        - LOCAL
+      transformation:
+        - xor
+    c_VirtualAlloc:
+      loadMethod:
+        - EMBEDDED
+      transformation:
+        - none
+  compiler-c: x86_64-w64-mingw32-gcc
+  compiler-nim: nim
+  compiler-golang: go
+

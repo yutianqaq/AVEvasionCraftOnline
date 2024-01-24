@@ -22,7 +22,7 @@
 
 [搭建方式](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki)
 
-# 用到的一些资源来源
+# 参考
 
 Vue 基础模板：https://github.com/wsheeny/vite-vue-template
 

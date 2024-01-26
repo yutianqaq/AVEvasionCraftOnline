@@ -26,7 +26,7 @@ func XorDecrypt(plaintext []byte, key []byte) []byte {
 
 func DecryptData(v2 string) []byte {
 	key := []byte{{{Key}}}
-	v22, err := base64.StdEncoding.DecodeString(v2)
+	v22, _ := base64.StdEncoding.DecodeString(v2)
 	v222 := XorDecrypt(v22, key)
 	return v222
 }

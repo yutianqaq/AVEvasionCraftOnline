@@ -2,6 +2,10 @@
 
 # AV Evasion Craft Online
 
+[搭建方式](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki) **不要搭建在公网中**
+
+代码维护/新增请参考[先知社区-Golang 免杀与AV Evasion Craft Online 在线免杀生成平台](https://xz.aliyun.com/t/13411?time__1311=mqmxnDBQqDq7wq05d4%2BxCuwCxu7faQQY4D#toc-6:~:text=增加一定难度-,Go 免杀,-平台自带)
+
 ![image-20240124190806863](images/image-20240124190806863.png)
 
 可绕过常见杀软
@@ -24,7 +28,15 @@
 
 支持 3 种 shellcode 存储方式（内嵌、本地、远程）
 
-[搭建方式](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki)
+# 安装
+
+[快速安装](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki/%E6%90%AD%E5%BB%BA%E6%96%B9%E5%BC%8F)
+
+模板不定期更新，启动后端时请指定参数
+
+`java -jar -Dspring.config.location=application.yaml AVEvasionCraftOnline-0.0.1-SNAPSHOT.jar`
+
+
 
 # 参考
 

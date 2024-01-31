@@ -1,6 +1,11 @@
 package com.yutian4060.avevasioncraftonline.utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class TextFileProcessor {
@@ -13,6 +18,15 @@ public class TextFileProcessor {
             String generatedVariableName = generateRandomString(FUNCTION_NAME_LENGTH);
             code = code.replace(variableName, generatedVariableName);
         }
+        return code;
+    }
+
+    public static String antiSandbox(String code, List<Integer> antiLists) throws IOException {
+        for(Integer antiList : antiLists) {
+            code = code.replace(antiList.toString(), Files.readString(Path.of("C:\\1bypassAVOnline\\antisandbox\\" + antiList)));
+        }
+        System.out.println(code);
+        Files.write(Path.of("C:\\1bypassAVOnline\\antisandbox\\out1.go"), code.getBytes());
         return code;
     }
 
@@ -68,4 +82,6 @@ public class TextFileProcessor {
 
         return count;
     }
+
+
 }

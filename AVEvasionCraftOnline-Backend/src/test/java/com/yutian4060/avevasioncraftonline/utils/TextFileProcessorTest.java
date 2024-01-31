@@ -2,6 +2,9 @@ package com.yutian4060.avevasioncraftonline.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +37,22 @@ class TextFileProcessorTest {
 
         String filePath = "C:\\1bypassAVOnline\\calc.bin";
         System.out.printf("convertToHexStringWithoutPrefixTest: %s\n", convertToHexStringWithoutPrefix(readFileBytes(filePath)));
+
+
     }
 
+
+    @Test
+    void antiSandboxTest() {
+        List<Integer> antiSandbox = List.of(1001, 1002);
+        String filePath = "C:\\1bypassAVOnline\\antisandbox\\out.go";
+
+        try {
+            String content = Files.readString(Paths.get(filePath));
+            antiSandbox(content, antiSandbox);
+        } catch (IOException e) {
+            // 处理文件读取错误
+            e.printStackTrace();
+        }
+    }
 }

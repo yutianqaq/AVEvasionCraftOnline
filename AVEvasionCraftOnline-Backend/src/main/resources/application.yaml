@@ -11,14 +11,6 @@ bypassav:
       transformation:
        - base64Xor
        - xor
-    go_CreateThread:
-      loadMethod:
-        - EMBEDDED
-        - REMOTE
-        - LOCAL
-      transformation:
-        - base64Xor
-        - xor
     nim_VirtualAlloc:
       loadMethod:
         - EMBEDDED

@@ -41,6 +41,22 @@
     </dependencies>
 
     <build>
+        <finalName>AVEvasionCraftOnline</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources/static</directory>
+                <targetPath>META-INF/resources/</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources/static</directory>
+                <includes>
+                    <include>sql/**</include>
+                    <include>*.yml</include>
+                    <include>logback.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

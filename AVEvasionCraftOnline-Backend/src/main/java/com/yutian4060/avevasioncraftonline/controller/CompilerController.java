@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 @RestController
 public class CompilerController {
@@ -41,13 +40,15 @@ public class CompilerController {
 
         ShellcodeUploadDTO.StorageType storageType = shellcodeUploadDTO.getStorageType();
 
-        if (shellcodeUploadDTO.getShellcode().getBytes().length > 520000 || shellcodeUploadDTO.getShellcode().getBytes().length < 200) {
+        if (shellcodeUploadDTO.getShellcode().getBytes().length > 5200000 || shellcodeUploadDTO.getShellcode().getBytes().length < 200) {
+            logger.warn("File Size: {}", shellcodeUploadDTO.getShellcode().getBytes().length);
             return Result.error();
         }
 
         if (storageType != ShellcodeUploadDTO.StorageType.REMOTE &&
                 storageType != ShellcodeUploadDTO.StorageType.EMBEDDED &&
                 storageType != ShellcodeUploadDTO.StorageType.LOCAL) {
+            logger.warn("storageType: {}", storageType);
             return Result.error();
         }
 

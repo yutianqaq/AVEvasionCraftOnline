@@ -2,7 +2,7 @@
 
 # AV Evasion Craft Online
 
-[搭建方式](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki) **不要搭建在公网中**
+**不要搭建在公网中**
 
 代码维护/新增请参考 [先知社区-Golang 免杀与AV Evasion Craft Online 在线免杀生成平台](https://xz.aliyun.com/t/13411?time__1311=mqmxnDBQqDq7wq05d4%2BxCuwCxu7faQQY4D#toc-6:~:text=%E5%A2%9E%E5%8A%A0%E4%B8%80%E5%AE%9A%E9%9A%BE%E5%BA%A6-,Go%20%E5%85%8D%E6%9D%80,-%E5%B9%B3%E5%8F%B0%E8%87%AA%E5%B8%A6)
 
@@ -30,11 +30,17 @@
 
 # 安装
 
-[快速安装](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki/%E6%90%AD%E5%BB%BA%E6%96%B9%E5%BC%8F)
+[详细版本](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki)
 
 模板不定期更新，启动后端时请指定参数
 
-`java -jar -Dspring.config.location=application.yaml AVEvasionCraftOnline-0.0.1-SNAPSHOT.jar`
+下载后，修改 application.yaml 中的路径(**非常重要**)
+
+![image-20240131132406380](images/image-20240131132406380.png)
+
+接着指定参数，jar 包名称需要更改。之后访问对应的端口即可
+
+`java -jar -Dspring.config.location=application.yaml AVEvasionCraftOnline.jar --server.port=80`
 
 
 

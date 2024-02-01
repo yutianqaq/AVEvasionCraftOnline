@@ -40,7 +40,7 @@ public class CompilerCode {
     }
 
     public static void compileGo(String destinationPath, String builderWorkPath) {
-        List<String> command = List.of("go", "build", "-ldflags", "-H=windowsgui", "-o", destinationPath + ".exe", destinationPath);
+        List<String> command = List.of("go", "build", "-ldflags=-s -w -H=windowsgui", "-trimpath", "-o", destinationPath + ".exe", destinationPath);
         logger.info("Builder Command: {}", command);
         executeCommand(command, builderWorkPath);
     }

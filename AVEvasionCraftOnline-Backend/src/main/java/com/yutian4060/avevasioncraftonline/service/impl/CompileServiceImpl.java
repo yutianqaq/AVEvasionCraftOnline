@@ -52,7 +52,7 @@ public class CompileServiceImpl implements CompileService {
             // nim
             "tId", "tHandle", "pHandle", "rPtr", "bytesWritten",
             // golang
-            "fetchShellcode", "delayedLoading", "checkDomain"
+            "fetchShellcode", "delayedLoading", "checkDomain", "DecryptData", "Ldr1", "WriteMemory", "XorDecrypt"
     );
 
     static final String TEMPLATE_LOCAL_FILENAME = "{{LOCAL_FILENAME}}";

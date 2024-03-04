@@ -1,7 +1,7 @@
 bypassav:
-  templates-directory: /home/kali/AVEvasionCraftOnline/template
-  storage-directory: /home/kali/AVEvasionCraftOnline/download
-  compilerwork-directory: /home/kali/AVEvasionCraftOnline/compiler
+  templates-directory: D:/AVEvasionCraftOnline/template
+  storage-directory: D:/AVEvasionCraftOnline/download
+  compilerwork-directory: D:/AVEvasionCraftOnline/compiler
   templates-mapping:
     go_VirtualAlloc:
       loadMethod:
@@ -11,12 +11,86 @@ bypassav:
       transformation:
        - base64Xor
        - xor
+       
+    go_CertEnumSystemStore:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_EnumChildWindows:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_EnumFontsW:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_EnumResourceTypesExW:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_FiberContextEdit:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_FlsAlloc:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_SetTimer:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
+    go_SymEnumProcesses:
+      loadMethod:
+        - EMBEDDED
+        - REMOTE
+        - LOCAL
+      transformation:
+       - base64Xor
+       - xor
+
     nim_VirtualAlloc:
       loadMethod:
         - EMBEDDED
         - LOCAL
       transformation:
         - xor
+
     c_VirtualAlloc:
       loadMethod:
         - EMBEDDED

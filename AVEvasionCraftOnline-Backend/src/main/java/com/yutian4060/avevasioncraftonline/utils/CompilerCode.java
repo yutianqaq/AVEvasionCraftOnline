@@ -21,7 +21,6 @@ public class CompilerCode {
     public static BypassAVConfigProperties bypassAVConfigProperties;
     private static final Logger logger = LoggerFactory.getLogger(CompilerCode.class);
     private static String WORKING_DIRECTORY;
-    public static final int RANDOM_FILENAME_LEN = 8; // 指定固定的编译工作目录
     @Autowired
     public void setApplicationProperties(BypassAVConfigProperties bypassAVConfigProperties) {
         CompilerCode.bypassAVConfigProperties = bypassAVConfigProperties;

@@ -44,6 +44,7 @@ public class CompileServiceImpl implements CompileService {
         DOWNLOAD_DIRECTORY = bypassAVConfigProperties.getStorageDirectory();
         TEMPLATE_DIRECTORY = bypassAVConfigProperties.getTemplatesDirectory();
     }
+
     public static final int RANDOM_FILENAME_LEN = 8; // 目标文件随机名称长度
 
     private static final List<String> functionNamesToReplace = Arrays.asList(
@@ -61,6 +62,7 @@ public class CompileServiceImpl implements CompileService {
     static final String TEMPLATE_KEY_PLACEHOLDER = "{{Key}}";
     static final String TEMPLATE_LEN_PLACEHOLDER = "{{Len}}";
     static final String TEMPLATE_SHELLCODE_PLACEHOLDER = "{{Shellcode}}";
+
 
     @Override
     public CompilationResponseDTO compileCodeC(ShellcodeUploadDTO shellcodeUploadDTO) throws IOException {
@@ -80,7 +82,7 @@ public class CompileServiceImpl implements CompileService {
             logger.info("Random key: {}", ShellcodeProcessor.getKey());
 //            logger.info("Transformation Shellcode: {}", transformedShellcode);
             String sourceFilePath = TEMPLATE_DIRECTORY + File.separator + shellcodeUploadDTO.getTemplateLanguage()
-                    + File.separator + shellcodeUploadDTO.getTemplateName() +  File.separator + shellcodeUploadDTO.getTransformation() +
+                    + File.separator + shellcodeUploadDTO.getTemplateName() + File.separator + shellcodeUploadDTO.getTransformation() +
                     File.separator + storageType + File.separator + shellcodeUploadDTO.getTemplateName() + ".c";
 
             // 将源文件复制到编译工作目录下，并使用随机文件名
@@ -92,8 +94,10 @@ public class CompileServiceImpl implements CompileService {
             content = TextFileProcessor.replaceFunctionNames(content, functionNamesToReplace);
             // 载入方式
             switch (storageType) {
-                case LOCAL -> content = content.replace(TEMPLATE_LOCAL_FILENAME, shellcodeUploadDTO.getAdditionalParameter());
-                case REMOTE -> content = content.replace(TEMPLATE_REMOTE_URL, shellcodeUploadDTO.getAdditionalParameter());
+                case LOCAL ->
+                        content = content.replace(TEMPLATE_LOCAL_FILENAME, shellcodeUploadDTO.getAdditionalParameter());
+                case REMOTE ->
+                        content = content.replace(TEMPLATE_REMOTE_URL, shellcodeUploadDTO.getAdditionalParameter());
             }
             content = content.replace(TEMPLATE_SHELLCODE_PLACEHOLDER, transformedShellcode)
                     .replace(TEMPLATE_KEY_PLACEHOLDER, ShellcodeProcessor.getKey())
@@ -105,7 +109,8 @@ public class CompileServiceImpl implements CompileService {
             CompilerCode.compileC(String.valueOf(destinationPath), randomDirectorName);
 
             // 保存为 zip 并清除工作环境
-            FileUtils.saveFileZIP(randomDirectorName,destinationPath + ".exe", destinationPath + ".bin", downloadPath);
+            FileUtils.saveFileZIP(randomDirectorName, destinationPath + ".exe",
+                    destinationPath + ".bin", downloadPath, FileUtils.writeREADME(shellcodeUploadDTO));
             FileUtils.deleteDirectory(workingDirectory);
 
 
@@ -134,7 +139,7 @@ public class CompileServiceImpl implements CompileService {
 //            logger.info("Transformation Shellcode: {}", transformedShellcode);
             String sourceFilePath = TEMPLATE_DIRECTORY + File.separator + shellcodeUploadDTO.getTemplateLanguage()
                     + File.separator + shellcodeUploadDTO.getTemplateName() + File.separator + shellcodeUploadDTO.getTransformation() +
-                    File.separator + storageType + File.separator  + shellcodeUploadDTO.getTemplateName() + ".nim";
+                    File.separator + storageType + File.separator + shellcodeUploadDTO.getTemplateName() + ".nim";
 
             // 将源文件复制到编译工作目录下，并使用随机文件名
             Files.copy(Path.of(sourceFilePath), destinationPath, StandardCopyOption.REPLACE_EXISTING);
@@ -145,8 +150,10 @@ public class CompileServiceImpl implements CompileService {
             content = TextFileProcessor.replaceFunctionNames(content, functionNamesToReplace);
             // 载入方式
             switch (storageType) {
-                case LOCAL -> content = content.replace(TEMPLATE_LOCAL_FILENAME, shellcodeUploadDTO.getAdditionalParameter());
-                case REMOTE -> content = content.replace(TEMPLATE_REMOTE_URL, shellcodeUploadDTO.getAdditionalParameter());
+                case LOCAL ->
+                        content = content.replace(TEMPLATE_LOCAL_FILENAME, shellcodeUploadDTO.getAdditionalParameter());
+                case REMOTE ->
+                        content = content.replace(TEMPLATE_REMOTE_URL, shellcodeUploadDTO.getAdditionalParameter());
             }
             content = content.replace(TEMPLATE_SHELLCODE_PLACEHOLDER, transformedShellcode)
                     .replace(TEMPLATE_KEY_PLACEHOLDER, ShellcodeProcessor.getKey())
@@ -158,7 +165,8 @@ public class CompileServiceImpl implements CompileService {
             CompilerCode.compileNim(String.valueOf(destinationPath), randomDirectorName);
 
             // 保存为 zip 并清除工作环境
-            FileUtils.saveFileZIP(randomDirectorName,destinationPath + ".exe", destinationPath + ".bin", downloadPath);
+            FileUtils.saveFileZIP(randomDirectorName, destinationPath + ".exe",
+                    destinationPath + ".bin", downloadPath, FileUtils.writeREADME(shellcodeUploadDTO));
             FileUtils.deleteDirectory(workingDirectory);
 
 
@@ -190,12 +198,16 @@ public class CompileServiceImpl implements CompileService {
                     File.separator + storageType + File.separator;
 
             String sourceFilePath = baseSourceFilePath + shellcodeUploadDTO.getTemplateName() + ".go";
-            String goModFilePath = baseSourceFilePath +  "go.mod";
-            String goSumFilePath = baseSourceFilePath + "go.sum";
+            Path goModFilePath = Path.of(String.valueOf(baseSourceFilePath),"go.mod");
+            Path goSumFilePath = Path.of(String.valueOf(baseSourceFilePath), "go.sum");
             // 将源文件复制到编译工作目录下，并使用随机文件名
             Files.copy(Path.of(sourceFilePath), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Path.of(goModFilePath), Path.of(String.valueOf(workingDirectory), "go.mod"), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(Path.of(goSumFilePath), Path.of(String.valueOf(workingDirectory), "go.sum"), StandardCopyOption.REPLACE_EXISTING);
+            if (Files.exists(goSumFilePath)) {
+                Files.copy(goModFilePath, Path.of(String.valueOf(workingDirectory), "go.mod"), StandardCopyOption.REPLACE_EXISTING);
+            }
+            if (Files.exists(goSumFilePath)) {
+                Files.copy(goSumFilePath, Path.of(String.valueOf(workingDirectory), "go.sum"), StandardCopyOption.REPLACE_EXISTING);
+            }
             byte[] fileContent = Files.readAllBytes(destinationPath);
             String content = new String(fileContent);
 
@@ -203,8 +215,10 @@ public class CompileServiceImpl implements CompileService {
             content = TextFileProcessor.replaceFunctionNames(content, functionNamesToReplace);
             // 载入方式
             switch (storageType) {
-                case LOCAL -> content = content.replace(TEMPLATE_LOCAL_FILENAME, shellcodeUploadDTO.getAdditionalParameter());
-                case REMOTE -> content = content.replace(TEMPLATE_REMOTE_URL, shellcodeUploadDTO.getAdditionalParameter());
+                case LOCAL ->
+                        content = content.replace(TEMPLATE_LOCAL_FILENAME, shellcodeUploadDTO.getAdditionalParameter());
+                case REMOTE ->
+                        content = content.replace(TEMPLATE_REMOTE_URL, shellcodeUploadDTO.getAdditionalParameter());
             }
             content = content.replace(TEMPLATE_SHELLCODE_PLACEHOLDER, transformedShellcode)
                     .replace(TEMPLATE_KEY_PLACEHOLDER, ShellcodeProcessor.getKey())
@@ -216,7 +230,9 @@ public class CompileServiceImpl implements CompileService {
             CompilerCode.compileGo(String.valueOf(destinationPath), randomDirectorName);
 
             // 保存为 zip 并清除工作环境
-            FileUtils.saveFileZIP(randomDirectorName,destinationPath + ".exe", destinationPath + ".bin", downloadPath);
+            FileUtils.saveFileZIP(randomDirectorName, destinationPath + ".exe",
+                    destinationPath + ".bin",
+                    downloadPath, FileUtils.writeREADME(shellcodeUploadDTO));
             FileUtils.deleteDirectory(workingDirectory);
 
 

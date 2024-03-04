@@ -1,5 +1,6 @@
 package com.yutian4060.avevasioncraftonline.utils;
 
+import com.yutian4060.avevasioncraftonline.dto.ShellcodeUploadDTO;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
@@ -9,6 +10,7 @@ import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -17,15 +19,34 @@ import java.util.List;
 
 public class FileUtils {
 
-    private static final String TEXT_CONTENT = """
-            本工具仅供安全研究和教学目的使用，用户须自行承担因使用该工具而引起的一切法律及相关责任。
-            作者概不对任何法律责任承担责任，且保留随时中止、修改或终止本工具的权利。使用者应当遵循当地法律法规，并理解并同意本声明的所有内容。
-            https://github.com/yutianqaq
-            """;
-
     private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
-    public static void saveFileZIP(String zipFileName, String filePath, String outputShellcodeFilePath, String storageDirectory) throws IOException {
+    public static String writeREADME(ShellcodeUploadDTO shellcodeUploadDTO) {
+        String shellcodeName = null;
+        if (shellcodeUploadDTO.getAdditionalParameter().equals("")) {
+            shellcodeName = "内嵌";
+        }
+        String storageType = switch (shellcodeUploadDTO.getStorageType()) {
+            case REMOTE -> "远程存储 Shellcode";
+            case LOCAL -> "本地存储 Shellcode";
+            default -> "内嵌存储 Shellcode";
+        };
+
+        return String.format("""
+            本工具仅供安全研究和教学目的使用，用户须自行承担因使用该工具而引起的一切法律及相关责任。
+            作者概不对任何法律责任承担责任，且保留随时中止、修改或终止本工具的权利。使用者应当遵循当地法律法规，并理解并同意本声明的所有内容。
+            
+            本工具使用 MIT 许可证。
+            项目地址：https://github.com/yutianqaq/AVEvasionCraftOnline
+            
+            Shellcode 加载方式：%s
+            Shellcode 转换方式：%s
+            Shellcode 存储方式：%s
+            Shellcode 资源名称：%s
+            """, shellcodeUploadDTO.getTemplateName(), shellcodeUploadDTO.getTransformation(),
+                storageType, shellcodeName);
+    }
+    public static void saveFileZIP(String zipFileName, String filePath, String outputShellcodeFilePath, String storageDirectory, String readme) throws IOException {
         Path storagePath = Path.of(storageDirectory);
         Files.createDirectories(storagePath);
 
@@ -40,7 +61,7 @@ public class FileUtils {
             List<File> filesToAdd = Arrays.asList(
                     new File(filePath),
                     new File(outputShellcodeFilePath),
-                    createTextFileInMemory()
+                    createTextFileInMemory(readme)
             );
 
             zipFile.addFiles(filesToAdd, zipParameters);
@@ -51,9 +72,9 @@ public class FileUtils {
 
     }
 
-    private static File createTextFileInMemory() throws IOException {
+    private static File createTextFileInMemory(String readme) throws IOException {
         Path tempTextFilePath = Files.createTempFile("README", ".txt");
-        Files.write(tempTextFilePath, TEXT_CONTENT.getBytes());
+        Files.writeString(tempTextFilePath, readme, StandardCharsets.UTF_8);
         return tempTextFilePath.toFile();
     }
 

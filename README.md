@@ -46,7 +46,8 @@
 
 # 参考
 
-Vue 基础模板：https://github.com/wsheeny/vite-vue-template
+https://github.com/wsheeny/vite-vue-template
 
-杀软识别：https://github.com/r00tSe7en/get_AV
+https://github.com/r00tSe7en/get_AV
 
+https://github.com/qi4L/CallbackLoader

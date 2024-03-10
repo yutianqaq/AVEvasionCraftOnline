@@ -28,6 +28,14 @@
 
 支持 3 种 shellcode 存储方式（内嵌、本地、远程）
 
+2024年3月10日 更新 8 种加载方式 （Golang）
+
+![PixPin_2024-03-10_16-41-50](images/012.png)
+
+![PixPin_2024-03-10_17-45-02](images/013.png)
+
+
+
 # 安装
 
 [详细版本](https://github.com/yutianqaq/AVEvasionCraftOnline/wiki)

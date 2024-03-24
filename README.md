@@ -2,7 +2,7 @@
 
 # AV Evasion Craft Online
 
-**不要搭建在公网中**
+**不要搭建在公网中** 有问题请先看 [issues](https://github.com/yutianqaq/AVEvasionCraftOnline/issues)
 
 代码维护/新增请参考 [先知社区-Golang 免杀与AV Evasion Craft Online 在线免杀生成平台](https://xz.aliyun.com/t/13411?time__1311=mqmxnDBQqDq7wq05d4%2BxCuwCxu7faQQY4D#toc-6:~:text=%E5%A2%9E%E5%8A%A0%E4%B8%80%E5%AE%9A%E9%9A%BE%E5%BA%A6-,Go%20%E5%85%8D%E6%9D%80,-%E5%B9%B3%E5%8F%B0%E8%87%AA%E5%B8%A6)
 

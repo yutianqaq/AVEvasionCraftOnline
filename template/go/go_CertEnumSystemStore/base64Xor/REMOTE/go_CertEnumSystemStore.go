@@ -1,10 +1,13 @@
+package main
+
 import (
 	"encoding/base64"
 	"os"
-	"golang.org/x/sys/windows"
 	"syscall"
 	"unsafe"
+
 	"github.com/valyala/fasthttp"
+	"golang.org/x/sys/windows"
 )
 
 const (

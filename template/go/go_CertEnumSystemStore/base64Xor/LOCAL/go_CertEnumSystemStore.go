@@ -1,9 +1,12 @@
+package main
+
 import (
 	"encoding/base64"
 	"os"
-	"golang.org/x/sys/windows"
 	"syscall"
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 const (
